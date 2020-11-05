@@ -1,0 +1,41 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/tabBar/index",
+        "pages/tabBar/my",
+        "pages/info/reback",
+        "pages/info/index"
+    ],
+    "subPackages": [],
+    "window": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "初练音乐",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#f20909",
+        "borderStyle": "black",
+        "backgroundColor": "#fff",
+        "list": [
+            {
+                "pagePath": "pages/tabBar/index",
+                "iconPath": "static/images/index-icon.png",
+                "selectedIconPath": "static/images/index-icon-active.png",
+                "text": "曲谱"
+            },
+            {
+                "pagePath": "pages/tabBar/my",
+                "iconPath": "static/images/my-icon.png",
+                "selectedIconPath": "static/images/my-icon-active.png",
+                "text": "我的"
+            }
+        ]
+    },
+    "uniStatistics": {
+        "enable": true
+    },
+    "usingComponents": {},
+    "sitemapLocation": "sitemap56.json"
+}
