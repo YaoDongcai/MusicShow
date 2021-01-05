@@ -4,7 +4,10 @@
         "pages/tabBar/index",
         "pages/tabBar/my",
         "pages/info/reback",
-        "pages/info/index"
+        "pages/info/index",
+        "pages/info/music-buy",
+        "pages/info/music-list",
+        "pages/info/publish"
     ],
     "subPackages": [],
     "window": {
@@ -37,5 +40,5 @@
         "enable": true
     },
     "usingComponents": {},
-    "sitemapLocation": "sitemap56.json"
+    "sitemapLocation": "sitemap5.json"
 }

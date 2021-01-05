@@ -1,5 +1,7 @@
 {
   "navigationStyle": "default",
   "navigationBarTitleText": "曲谱详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot"
+  }
 }

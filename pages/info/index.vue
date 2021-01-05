@@ -1,6 +1,15 @@
 <template>
 	<view class="info">
-		<view class="info-img">
+		<!--  这个部分是轮播图 -->
+		<uni-swiper-dot v-if="isBuy" :info="info" :current="current" field="content">
+			<swiper class="swiper-box" @change="change">
+				<swiper-item v-for="(item ,index) in info" :key="index">
+					<image :src="item.images" class="swiper-item"></image>
+				</swiper-item>
+			</swiper>
+		</uni-swiper-dot>
+
+		<view v-if="!isBuy" class="info-img">
 			<image src="https://imgnew.zhichikeji.com/zcimgdir/album/file_5f865acf40112.png"></image>
 		</view>
 		<!--  购买信息 -->
@@ -11,12 +20,12 @@
 			<view class="info-cart-item">
 				165人评价
 			</view>
-			<view class="info-cart-item red-color">
+			<view class="info-cart-item red-color" v-if="!isBuy" @click="handleBuy">
 				购买
 			</view>
 		</view>
 		<view class="info-black">
-			
+
 		</view>
 		<!-- 教学视频 -->
 		<view class="info-video">
@@ -32,7 +41,7 @@
 			<view class="info-cart-item">
 				1615人评价
 			</view>
-			<view class="info-cart-item red-color">
+			<view class="info-cart-item red-color" v-if="!isBuy">
 				购买
 				<!-- <view class="info-cart-item-btn">
 					
@@ -40,14 +49,14 @@
 			</view>
 		</view>
 		<view class="info-black">
-			
+
 		</view>
 		<!-- 个人中心 -->
 		<view class="info-person">
 			<view class="info-person-left">
-					<image src="https://img.zhichiwangluo.com/zcimgdir/thumb/t_15242168045ad9b3e4c0e0b.jpg">
-						
-					</image>
+				<image src="https://img.zhichiwangluo.com/zcimgdir/thumb/t_15242168045ad9b3e4c0e0b.jpg">
+
+				</image>
 			</view>
 			<view class="info-person-right">
 				<view class="info-person-right-item">
@@ -63,7 +72,7 @@
 		</view>
 		<!-- 作品介绍 -->
 		<view class="info-black">
-			
+
 		</view>
 		<view class="info-intro">
 			<view class="info-intro-header">
@@ -75,7 +84,7 @@
 		</view>
 		<!-- 评价排序 -->
 		<view class="info-black">
-			
+
 		</view>
 		<view class="info-ul">
 			<view class="info-ul-header">
@@ -103,29 +112,83 @@
 </template>
 
 <script>
+	import uniSwiperDot from "@/components/uni-swiper-dot/uni-swiper-dot.vue"
+	var _self,
+		page = 1,
+		timer = null;
 	export default {
+		components: {
+			uniSwiperDot
+		},
 		data() {
 			return {
+				isBuy: false,
+				info: [{
+					content: '',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f865acf40112.png'
+				}, {
+					content: '',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f865acf40112.png'
+				}, {
+					content: '',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f865acf40112.png'
+				}],
+				current: 0
+			}
+		},
+		onLoad() {
+			// 获取数据
+			
+			const self = this
+			// 开始获取数据
+			
+		},
+		methods: {
+			change(e) {
+				this.current = e.detail.current;
+			},
+			// 购买
+			handleBuy() {
+				const self = this
+				uni.showModal({
+					content: '当前购买会消耗您的音棒100枚',
+					showCancel: true,
+					buttonText: '确定',
+					success: (res) => {
+						if (res.confirm) {
+							self.isBuy = true
+						} else if (res.cancel) {
 
+						}
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-		@import '@/components/mixin.scss';
+	@import '@/components/mixin.scss';
+	.swiper-box {
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
 	.info {
 		.info-ul {
 			margin-top: 30upx;
 			margin-bottom: 30upx;
 			display: flex;
 			flex-direction: column;
+
 			&-header {
 				font-size: 32upx;
-				color:rgb(153, 153, 153);
+				color: rgb(153, 153, 153);
 				position: relative;
 				padding-left: 30upx;
 				padding-bottom: 30upx;
+
 				&::after {
 					@include hairline();
 					border-bottom-width: 1px;
@@ -134,6 +197,7 @@
 					left: 0px;
 				}
 			}
+
 			&-li {
 				display: flex;
 				margin-top: 18upx;
@@ -141,6 +205,7 @@
 				padding-bottom: 16upx;
 				padding-left: 30upx;
 				padding-right: 30upx;
+
 				&::after {
 					@include hairline();
 					border-bottom-width: 1px;
@@ -148,21 +213,25 @@
 					top: 0upx;
 					left: 0px;
 				}
+
 				&-left {
 					width: 80upx;
 					height: 80upx;
+
 					image {
 						width: 100%;
 						height: 100%;
 						border-radius: 50%;
 					}
 				}
+
 				&-center {
 					flex: 1;
 					padding-left: 30upx;
 					font-size: 28upx;
-					color:rgb(153, 153, 153);
+					color: rgb(153, 153, 153);
 				}
+
 				&-right {
 					width: 110upx;
 					text-align: right;
@@ -171,81 +240,98 @@
 				}
 			}
 		}
+
 		.info-black {
 			height: 30upx;
 			background-color: rgb(243, 243, 243);
 		}
+
 		.info-intro {
 			padding-left: 30upx;
 			padding-right: 30upx;
 			margin-top: 30upx;
 			margin-bottom: 30upx;
+
 			.info-intro-header {
 				font-size: 32upx;
-				color:rgb(153, 153, 153);
+				color: rgb(153, 153, 153);
 			}
+
 			.info-intro-content {
 				margin-top: 15upx;
 				color: rgb(51, 51, 51);
 			}
 		}
+
 		.info-person {
 			padding-left: 30upx;
 			padding-right: 30upx;
 			display: flex;
 			margin-top: 30upx;
 			margin-bottom: 30upx;
+
 			&-left {
 				width: 60upx;
+
 				image {
 					width: 60upx;
 					border-radius: 50%;
 					height: 60upx;
 				}
 			}
+
 			&-right {
 				flex: 1;
 				padding-left: 30upx;
 				display: flex;
 				flex-direction: column;
+
 				&-item {
 					display: flex;
+
 					.red-span {
 						color: rgb(242, 9, 9) !important;
 					}
+
 					span {
 						display: inline-block;
 						margin-left: 15upx;
-						color:rgb(153, 153, 153);
+						color: rgb(153, 153, 153);
 						font-size: 28upx;
 					}
 				}
 			}
 		}
+
 		.info-video {
 			padding-left: 30upx;
 			padding-right: 30upx;
 			margin-top: 30upx;
 			margin-bottom: 30upx;
 			width: calc(100vw-60upx);
+
 			video {
 				width: 100%;
 			}
 		}
+
 		.info-cart {
 			padding-left: 30upx;
 			padding-right: 30upx;
 			display: flex;
 			margin-top: 30upx;
 			margin-bottom: 30upx;
+
 			.info-cart-item {
-				flex:1;
+				flex: 1;
 				font-size: 28upx;
 				color: rgb(153, 153, 153);
 				text-align: right;
+
 				&.red-color {
 					color: rgb(242, 9, 9);
 				}
+
 				.info-cart-item-btn {
 					text-align: center;
 					width: 100rpx;
@@ -256,10 +342,12 @@
 				}
 			}
 		}
+
 		.info-img {
 			padding-left: 30upx;
 			padding-right: 30upx;
 			width: calc(100vw-60upx);
+
 			image {
 				width: 100%;
 			}

@@ -33,6 +33,27 @@
 				"navigationStyle": "default",
 				"navigationBarTitleText": "曲谱详情"
 			}
+		},
+		{
+			"path": "pages/info/music-buy",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "求购曲谱"
+			}
+		},
+		{
+			"path": "pages/info/music-list",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "我的曲谱"
+			}
+		},
+		{
+			"path": "pages/info/publish",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "发布曲谱教程"
+			}
 		}
 	],
 	"tabBar": {
@@ -59,5 +80,6 @@
 		"navigationBarTitleText": "初练音乐",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	}
+	},
+	"cloud": true
 }

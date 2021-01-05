@@ -22,15 +22,9 @@
 		</view>
 
 		<!-- 这个是一个tabbar 显示栏 -->
-		<view class="tabs">
-			<view class="tabs-tab active">
-				吉他
-			</view>
-			<view class="tabs-tab">
-				架子鼓
-			</view>
-			<view class="tabs-tab">
-				尤克里里
+		<view class="tabs" >
+			<view @click="handleTab(item)" v-for="item in tabs" :key="item.id" :class="['tabs-tab', item.active ? 'active': '']">
+				{{ item.name }}
 			</view>
 		</view>
 
@@ -71,6 +65,93 @@
 		</view>
 	</view>
 </template>
+
+<script>
+	import uniSwiperDot from "@/components/uni-swiper-dot/uni-swiper-dot.vue"
+	var _self,
+		page = 1,
+		timer = null;
+	export default {
+		name: 'TabBarIndex',
+		components: {
+			uniSwiperDot
+		},
+		data() {
+			return {
+				tabs: [{
+					name: '吉他',
+					type: '1',
+					active: true, // 默认
+					id: 1
+				}, {
+					name: '架子鼓',
+					type: '2',
+					active: false, // 默认
+					id: 2
+				}, {
+					name: '尤克里里',
+					type: '3',
+					active: false, // 默认
+					id: 3
+				}],
+				searchKey: '',
+				info: [{
+					content: '探趣未来曲目，跟我学习吧',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f717cd0773b2.jpg'
+				}, {
+					content: 'uCharts荣获uni-app插件大赛一等奖',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/thumb/t_16012731295f717d2951c51.jpg'
+				}, {
+					content: '测试华东demo',
+					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f717cdfd57d2.jpg'
+				}],
+				current: 0,
+				
+				newsList: [],
+			}
+		},
+		onShow() {
+			this.getNewsList('1')
+		},
+		methods: {
+			getNewsList(type) {
+				const self = this
+				uni.showLoading({
+					title: '加载中...'
+				})
+				this.DB.collection('news').where({
+					musicType: type
+				}).get().then((res) => {
+					uni.hideLoading()
+					this.newsList = res.data
+				} )
+			},
+			change(e) {
+				this.current = e.detail.current;
+			},
+			handleTab(item) {
+				this.tabs.map(tab => {
+					if(item.id == tab.id) {
+						tab.active = true
+					} else {
+						tab.active = false
+					}
+				})
+				
+				// 同时需要去查询对应的数据
+				this.getNewsList(item.type)
+			},
+			handlleClick(item){
+				uni.navigateTo({
+					url: '../info/index'
+				})
+			},
+			search() {
+
+			}
+		}
+	}
+</script>
 
 <style lang="scss">
 	@import '@/components/mixin.scss';
@@ -234,72 +315,3 @@
 		}
 	}
 </style>
-<script>
-	import uniSwiperDot from "@/components/uni-swiper-dot/uni-swiper-dot.vue"
-	var _self,
-		page = 1,
-		timer = null;
-	export default {
-		name: 'TabBarIndex',
-		components: {
-			uniSwiperDot
-		},
-		data() {
-			return {
-				searchKey: '',
-				info: [{
-					content: '探趣未来曲目，跟我学习吧',
-					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f717cd0773b2.jpg'
-				}, {
-					content: 'uCharts荣获uni-app插件大赛一等奖',
-					images: 'https://imgnew.zhichikeji.com/zcimgdir/thumb/t_16012731295f717d2951c51.jpg'
-				}, {
-					content: '测试华东demo',
-					images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f717cdfd57d2.jpg'
-				}],
-				current: 0,
-				newsList: [{
-					id: 1,
-					src: 'https://img.zhichiwangluo.com/zcimgdir/album/file_5acf13aa31ab9.jpg',
-					type: '弹唱',
-					name: '七里香(周杰伦)',
-					author: '姚东才',
-					score: '5.0',
-					hot: '60',
-					sales: '1220'
-				},{
-					id: 2,
-					src: 'https://img.zhichiwangluo.com/zcimgdir/thumb/t_15242168045ad9b3e4c0e0b.jpg',
-					type: '弹唱',
-					name: '稻香(周杰伦)',
-					author: '李朝阳',
-					score: '5.0',
-					hot: '90',
-					sales: '3220'
-				},{
-					id: 3,
-					src: 'https://img.zhichiwangluo.com/zcimgdir/album/file_5ae1c677cee8f.jpg',
-					type: '弹唱',
-					name: '夜的第七章(周杰伦)',
-					author: '王臣',
-					score: '5.0',
-					hot: '90',
-					sales: '5220'
-				}],
-			}
-		},
-		methods: {
-			change(e) {
-				this.current = e.detail.current;
-			},
-			handlleClick(item){
-				uni.navigateTo({
-					url: '../info/index'
-				})
-			},
-			search() {
-
-			}
-		}
-	}
-</script>

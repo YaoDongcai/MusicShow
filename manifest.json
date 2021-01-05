@@ -58,6 +58,7 @@
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wxc5ede087b54c2d2b",
+ /*指定云函数目录		"cloudfunctionRoot": "static/cloudfunctions/"*/  
         "setting" : {
             "urlCheck" : false,
             "postcss" : true

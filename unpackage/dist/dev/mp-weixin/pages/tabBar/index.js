@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uniSwiperDot: function() {
-    return __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 55))
+    return __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 82))
   }
 }
 var render = function() {
@@ -134,175 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSwiperDot = function uniSwiperDot() {__webpack_require__.e(/*! require.ensure | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then((function () {return resolve(__webpack_require__(/*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 55));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSwiperDot = function uniSwiperDot() {__webpack_require__.e(/*! require.ensure | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then((function () {return resolve(__webpack_require__(/*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -382,6 +214,22 @@ timer = null;var _default =
 
   data: function data() {
     return {
+      tabs: [{
+        name: '吉他',
+        type: '1',
+        active: true, // 默认
+        id: 1 },
+      {
+        name: '架子鼓',
+        type: '2',
+        active: false, // 默认
+        id: 2 },
+      {
+        name: '尤克里里',
+        type: '3',
+        active: false, // 默认
+        id: 3 }],
+
       searchKey: '',
       info: [{
         content: '探趣未来曲目，跟我学习吧',
@@ -394,39 +242,40 @@ timer = null;var _default =
         images: 'https://imgnew.zhichikeji.com/zcimgdir/album/file_5f717cdfd57d2.jpg' }],
 
       current: 0,
-      newsList: [{
-        id: 1,
-        src: 'https://img.zhichiwangluo.com/zcimgdir/album/file_5acf13aa31ab9.jpg',
-        type: '弹唱',
-        name: '七里香(周杰伦)',
-        author: '姚东才',
-        score: '5.0',
-        hot: '60',
-        sales: '1220' },
-      {
-        id: 2,
-        src: 'https://img.zhichiwangluo.com/zcimgdir/thumb/t_15242168045ad9b3e4c0e0b.jpg',
-        type: '弹唱',
-        name: '稻香(周杰伦)',
-        author: '李朝阳',
-        score: '5.0',
-        hot: '90',
-        sales: '3220' },
-      {
-        id: 3,
-        src: 'https://img.zhichiwangluo.com/zcimgdir/album/file_5ae1c677cee8f.jpg',
-        type: '弹唱',
-        name: '夜的第七章(周杰伦)',
-        author: '王臣',
-        score: '5.0',
-        hot: '90',
-        sales: '5220' }] };
 
+      newsList: [] };
 
   },
+  onShow: function onShow() {
+    this.getNewsList('1');
+  },
   methods: {
+    getNewsList: function getNewsList(type) {var _this = this;
+      var self = this;
+      uni.showLoading({
+        title: '加载中...' });
+
+      this.DB.collection('news').where({
+        musicType: type }).
+      get().then(function (res) {
+        uni.hideLoading();
+        _this.newsList = res.data;
+      });
+    },
     change: function change(e) {
       this.current = e.detail.current;
+    },
+    handleTab: function handleTab(item) {
+      this.tabs.map(function (tab) {
+        if (item.id == tab.id) {
+          tab.active = true;
+        } else {
+          tab.active = false;
+        }
+      });
+
+      // 同时需要去查询对应的数据
+      this.getNewsList(item.type);
     },
     handlleClick: function handlleClick(item) {
       uni.navigateTo({

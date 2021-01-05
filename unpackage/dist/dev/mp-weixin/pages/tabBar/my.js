@@ -292,7 +292,8 @@ var _default =
     return {
       list: [{
         title: '我的曲谱',
-        id: 1 },
+        id: 1,
+        url: '/pages/info/music-list' },
       {
         title: '反馈吐槽',
         id: 2,
@@ -302,7 +303,12 @@ var _default =
         title: '关于我们' },
       {
         id: 4,
-        title: '申请成为教员' }] };
+        title: '发布曲谱教程',
+        url: '/pages/info/publish' },
+      {
+        id: 5,
+        title: '发布求谱订单',
+        url: '/pages/info/music-buy' }] };
 
 
   },
