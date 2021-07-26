@@ -47,7 +47,8 @@
   display: inline-block;
   position: relative;
   padding-right: 10rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .hx-video-content-item-image {
   width: 100%;

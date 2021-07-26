@@ -154,10 +154,12 @@
 	}
 </style>
 <script>
+	let weixinAuthService
 	export default {
 		name: 'TabBarMy',
 		data() {
 			return {
+				hasWeixinAuth: false,
 				list: [{
 					title: '我的曲谱',
 					id: 1,
@@ -172,15 +174,57 @@
 				}, {
 					id: 4,
 					title: '发布曲谱教程',
-					url:'/pages/info/publish'
+					url: '/pages/info/publish'
 				}, {
 					id: 5,
 					title: '发布求谱订单',
-					url:'/pages/info/music-buy'
+					url: '/pages/info/music-buy'
 				}]
 			}
 		},
+		onLoad() {
+			this.loginByWeixin()
+		},
 		methods: {
+			getWeixinCode() {
+				return new Promise((resolve, reject) => {
+					// #ifdef MP-WEIXIN
+					uni.login({
+						provider: 'weixin',
+						success(res) {
+							resolve(res.code)
+						},
+						fail(err) {
+							reject(new Error('微信登录失败'))
+						}
+					})
+					// #endif
+				})
+			},
+			loginByWeixin() {
+				this.getWeixinCode().then((code) => {
+					return uniCloud.callFunction({
+						name: 'login-by-weixin',
+						data: {
+							code
+						}
+					})
+				}).then((res) => {
+					uni.showModal({
+						showCancel: false,
+						content: JSON.stringify(res.result)
+					})
+					if (res.result.code === 0) {
+						uni.setStorageSync('uni_id_token', res.result.token)
+						uni.setStorageSync('uni_id_token_expired', res.result.tokenExpired)
+					}
+				}).catch(() => {
+					uni.showModal({
+						showCancel: false,
+						content: '微信登录失败，请稍后再试'
+					})
+				})
+			},
 			handleClick(item) {
 				item.url && uni.navigateTo({
 					url: item.url

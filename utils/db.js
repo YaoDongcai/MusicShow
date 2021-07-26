@@ -4,6 +4,4 @@ export class DB {
 		// 初始化这个db 的数据
 		this.db = wx.cloud.database()
 	}
-	
-	
 }

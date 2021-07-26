@@ -15,6 +15,12 @@
 				<view class="role-btn" @click="gotoPage('teacher')">
 					<span class="role-btn-txt">教师</span>
 				</view>
+				<button class="role-btn" @click="login" >
+					<span class="role-btn-txt">微信授权一键登录</span>
+				</button>
+				<button class="role-btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+					<span class="role-btn-txt">手机号登录</span>
+				</button>
 
 			</view>
 		</view>
@@ -43,15 +49,31 @@
 			this.top = (this.navBarHeight - this.menuBotton) - 94;
 		},
 		methods: {
+			getPhoneNumber(res) {
+				console.log('手机号登录', res)
+			},
+			login() {
+				uni.getUserProfile({
+					desc:'登录',
+					success:(res)=>{
+						debugger
+						console.log(res);
+					},
+					fail:(res)=>{
+						debugger
+						console.log(res)
+					}
+				});
+			},
+			onGotUserInfo(res) {
+				console.log('res' + res)
+			},
 			gotoPage(e) {
 				switch (e) {
 					case 'student':
 						uni.switchTab({
 							url: '/pages/tabBar/index'
 						});
-						// uni.navigateTo({
-						// 	url: '/pages/tabBar/index'
-						// })
 						break;
 					case 'teacher':
 						uni.showToast({

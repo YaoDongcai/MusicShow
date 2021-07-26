@@ -162,6 +162,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   components: {},
@@ -184,15 +190,31 @@ var _default =
     this.top = this.navBarHeight - this.menuBotton - 94;
   },
   methods: {
+    getPhoneNumber: function getPhoneNumber(res) {
+      console.log('手机号登录', res);
+    },
+    login: function login() {
+      uni.getUserProfile({
+        desc: '登录',
+        success: function success(res) {
+          debugger;
+          console.log(res);
+        },
+        fail: function fail(res) {
+          debugger;
+          console.log(res);
+        } });
+
+    },
+    onGotUserInfo: function onGotUserInfo(res) {
+      console.log('res' + res);
+    },
     gotoPage: function gotoPage(e) {
       switch (e) {
         case 'student':
           uni.switchTab({
             url: '/pages/tabBar/index' });
 
-          // uni.navigateTo({
-          // 	url: '/pages/tabBar/index'
-          // })
           break;
         case 'teacher':
           uni.showToast({

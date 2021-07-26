@@ -1,0 +1,31 @@
+{
+    "passwordSecret": "bctos-weixin-h5",
+    "tokenSecret": "bctos-weixin-h5",
+    "tokenExpiresIn": 7200,
+    "tokenExpiresThreshold": 600,
+    "passwordErrorLimit": 6,
+    "passwordErrorRetryTime": 3600,
+    "autoSetInviteCode": false,
+    "forceInviteCode": false,
+    "mp-weixin": {
+        "oauth" : {
+            "weixin" : {
+                "appid" : "wxc5ede087b54c2d2b",
+                "appsecret" : "9d1ba76cfd9feb7e9afe2fca4f570427"
+            }
+        }
+    },
+    "service": {
+        "sms": {
+            "name": "your app name",
+            "codeExpiresIn": 180,
+            "smsKey": "your sms key",
+            "smsSecret": "your sms secret"
+        },
+        "univerify": {
+            "appid":"your appid",
+            "apiKey": "your apiKey",
+            "apiSecret": "your apiSecret"
+        }
+    }
+}
